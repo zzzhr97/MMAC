@@ -1,8 +1,9 @@
 import os
 import argparse
 
+datasets = ['LC', 'CN', 'FS']
+
 parser = argparse.ArgumentParser()
-parser.add_argument('--dataset', type=str, default='LC', choices=['LC', 'CN', 'FS'])
 parser.add_argument('--str', type=str, default='None')
 
 args = parser.parse_args()
@@ -15,5 +16,6 @@ def delFile(dirPath, str):
                 os.remove(os.path.join(root, file))
 
 if args.str is not None:
-    delFile(f'../model/{args.dataset}', args.str)
-    delFile(f'../result/{args.dataset}', args.str)
+    for dataset in datasets:
+        delFile(f'../model/{dataset}', args.str)
+        delFile(f'../result/{dataset}', args.str)

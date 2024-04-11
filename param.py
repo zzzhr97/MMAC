@@ -2,7 +2,7 @@ import argparse
 
 def getArgs():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--base_data_path', type=list, default=['./Data1', './Data2'])
+    parser.add_argument('--base_data_path', nargs='+', type=int, default=['./Data1', './Data2'])
     parser.add_argument('--seed', type=int, default=42)
     parser.add_argument('--epoch', type=int, default=100)
     parser.add_argument('--save_each', type=int, default=0, 
