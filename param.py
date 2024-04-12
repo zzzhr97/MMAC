@@ -2,6 +2,7 @@ import argparse
 
 def getArgs():
     parser = argparse.ArgumentParser()
+    parser.add_argument('--training_id', type=str, default='', help='Naming one training. Useful for control/del.sh.')
     parser.add_argument('--base_data_path', nargs='+', type=int, default=['./Data1', './Data2'])
     parser.add_argument('--seed', type=int, default=42)
     parser.add_argument('--epoch', type=int, default=100)

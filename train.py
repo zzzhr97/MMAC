@@ -91,7 +91,8 @@ class Train(object):
     def prepareResultFile(self):
         self.timeID = getTime()
         self.resultFile = open(
-            f"./result/{self.args.dataset}/{self.timeID}.txt",
+            f"./result/{self.args.dataset}/" + \
+            f"{self.timeID}_{self.args.training_id}.txt",
             'w'
         )
         # parameter setting
@@ -145,8 +146,9 @@ class Train(object):
             if self.args.save_each > 0:
                 if curEpoch % self.args.save_each == 0:
                     torch.save(
-                        self.model.state_dict(),
-                        f"./model/{self.args.dataset}/{self.timeID}_{self.args.model}_epoch{curEpoch:03d}.pth"
+                        self.model,
+                        f"./model/{self.args.dataset}/" + \
+                        f"{self.timeID}_{self.args.training_id}_{self.args.model}_epoch{curEpoch:03d}.pth"
                     )
 
             if validResult['dice'] > bestScore:
@@ -158,8 +160,9 @@ class Train(object):
                 bestScore = validResult['dice']
                 bestEpoch = curEpoch
                 torch.save(
-                    self.model.state_dict(),
-                    f"./model/{self.args.dataset}/{self.timeID}_{self.args.model}_best.pth"
+                    self.model,
+                    f"./model/{self.args.dataset}/" + \
+                    f"{self.timeID}_{self.args.training_id}_{self.args.model}_best.pth"
                 )
 
         self.write(

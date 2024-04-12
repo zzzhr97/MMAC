@@ -17,6 +17,17 @@
   - 修改`del.sh`文件中的`str`参数
   - 运行`bash del.sh`将会删除`model`和`result`文件夹中，所有包含`str`的文件
 
+## Upload
+- 将模型参数文件`.pth`放到`upload/upload_model/`中，三个不同的数据集分别放到对应的文件夹中
+- 运行`bash test.sh`检查正确性
+- 将下列文件/文件夹打包，如`1_4-12.zip`
+  - `upload_model/`
+  - `metadata`
+  - `model.py`
+- 进入比赛网站 [MMAC](https://codalab.lisn.upsaclay.fr/competitions/12476#participate-submit_results)
+- 进入`future test phase`中，上传`zip`文件
+
 ## Record
 - `v0.1`
   - 上传项目文件
+  - 添加`upload`文件夹，用于测试
