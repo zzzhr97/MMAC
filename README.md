@@ -35,5 +35,4 @@
 ## Grid Search
 
 `python gridsearch.py`
-
-不会输出模型，输出的日志在searchlog目录下,文件名的第一个数为使用这套超参取得最大的dice对应的（1-dice），后面是超参数
+- 不会输出模型，输出的日志在searchlog目录下,文件名的第一个数为使用这套超参取得最大的dice对应的（1-dice），后面是超参数

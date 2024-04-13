@@ -152,7 +152,7 @@ class Train(object):
             self.write(f"ValidLoss - {validResult['validLoss']:.8f} ")
             self.write(f"ValidDice - {validResult['dice']:.8f}\n", flush=True)
 
-            if self.args.save_each > 0:
+            if self.args.save_each > 0 and self.args.gridsearch == 0:
                 if curEpoch % self.args.save_each == 0:
                     torch.save(
                         self.model,

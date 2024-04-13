@@ -7,7 +7,7 @@ def getArgs():
     parser.add_argument('--seed', type=int, default=42)
     parser.add_argument('--epoch', type=int, default=150)
     parser.add_argument('--save_each', type=int, default=0, 
-        help='save model each n epoch, 0 for not save')
+        help='save model each n epoch, 0 for not save and only save the best.')
     parser.add_argument('--batch_size', type=int, default=4)
     parser.add_argument('--lr', type=float, default=1e-4)
     parser.add_argument('--wd', type=float, default=0)
