@@ -24,6 +24,7 @@ class Train(object):
 
         os.makedirs(f"./model/{args.dataset}", exist_ok=True)
         os.makedirs(f"./result/{args.dataset}", exist_ok=True)
+        os.makedirs(f"./searchlog/{args.dataset}", exist_ok=True)
 
         self.prepareData()
         self.prepareModel()
@@ -90,11 +91,19 @@ class Train(object):
 
     def prepareResultFile(self):
         self.timeID = getTime()
-        self.resultFile = open(
-            f"./result/{self.args.dataset}/" + \
-            f"{self.timeID}_{self.args.training_id}.txt",
-            'w'
-        )
+        
+        if self.args.gridsearch==0:
+            self.resultFile = open(
+                f"./result/{self.args.dataset}/" + \
+                f"{self.timeID}_{self.args.training_id}.txt",
+                'w'
+            )
+        else:
+            self.resultFile = open(
+                f"./searchlog/{self.args.dataset}/" + \
+                f"tmp.txt",
+                'w'
+            )
         # parameter setting
         for key, value in sorted(vars(self.args).items(), key=lambda x: x[0]):
             self.write(f"{'[' + key + ']':<20} --- {value}\n")
@@ -159,17 +168,25 @@ class Train(object):
                 )
                 bestScore = validResult['dice']
                 bestEpoch = curEpoch
-                torch.save(
-                    self.model,
-                    f"./model/{self.args.dataset}/" + \
-                    f"{self.timeID}_{self.args.training_id}_{self.args.model}_best.pth"
-                )
+                if self.args.gridsearch==0:
+                    torch.save(
+                        self.model,
+                        f"./model/{self.args.dataset}/" + \
+                        f"{self.timeID}_{self.args.training_id}_{self.args.model}_best.pth"
+                    )
 
         self.write(
             f"\nBest model: {bestEpoch:03d}\nDice: {bestScore:.08f}\n", 
             printstdout=True
         )
         self.close()
+
+        os.rename(f"./searchlog/{self.args.dataset}/tmp.txt",
+                f"./searchlog/{self.args.dataset}/" + \
+                f"{1-bestScore:.08f}_{self.args.seed}_{self.args.batch_size}_{self.args.lr}_{self.args.lr_scheduler}_{self.args.model}" +\
+                f"_{self.args.optimizer}_{self.args.loss_func}_{self.args.encoder}_{self.args.activation}_{self.timeID}.txt"         
+                         )
+        
 
     def trainOnce(self, epoch):
         self.model.train()

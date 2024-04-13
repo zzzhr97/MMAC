@@ -5,6 +5,8 @@ Data1/
 Data2/
 show/
 *.pth
+.vscode/
+searchlog/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

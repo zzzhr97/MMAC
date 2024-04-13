@@ -3,9 +3,9 @@ import argparse
 def getArgs():
     parser = argparse.ArgumentParser()
     parser.add_argument('--training_id', type=str, default='', help='Naming one training. Useful for control/del.sh.')
-    parser.add_argument('--base_data_path', nargs='+', type=int, default=['./Data1', './Data2'])
+    parser.add_argument('--base_data_path', nargs='+', type=str, default=['./Data1', './Data2'])
     parser.add_argument('--seed', type=int, default=42)
-    parser.add_argument('--epoch', type=int, default=100)
+    parser.add_argument('--epoch', type=int, default=150)
     parser.add_argument('--save_each', type=int, default=0, 
         help='save model each n epoch, 0 for not save')
     parser.add_argument('--batch_size', type=int, default=4)
@@ -47,7 +47,8 @@ def getArgs():
     parser.add_argument('--encoder', type=str, default='resnext50_32x4d')
     parser.add_argument('--encoder_weights', type=str, default='imagenet')
     parser.add_argument('--activation', type=str, default='sigmoid')
-
+    
+    parser.add_argument('--gridsearch',type=int,default=0)
     args = parser.parse_args()
 
     return args
