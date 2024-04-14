@@ -40,3 +40,5 @@
   - 网格搜索
 - `v0.3`
   - 添加多种网络，修改部分代码
+- `v0.4`
+  - 修复`smp`包的一个`bug`，只有`import segmentation_model_pytorch.utils`之后才能使用`smp.utils`

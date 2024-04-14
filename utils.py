@@ -5,6 +5,7 @@ import torch.nn as nn
 from torch.nn import functional as F
 import random
 import segmentation_models_pytorch as smp
+import segmentation_models_pytorch.utils
 from datetime import datetime
 from datetime import timedelta
 from datetime import timezone

@@ -6,7 +6,7 @@ from types import SimpleNamespace
 #非网格变量
 training_id = "zhr1"
 base_data_path = ['./Data1', './Data2']
-epoch = 2
+epoch = 120
 save_each = 0
 device = "cuda"
 encoder_weights = 'imagenet'
@@ -28,13 +28,13 @@ activations = ['sigmoid','relu','tanh']
 '''
 seeds = [42]
 batch_sizes = [4]
-lrs = [1e-4]
+lrs = [1e-3, 1e-4]
 wds = [0]
 lr_schedulers = ['step']
 models = ['unet', 'unet++', 'manet', 'linknet', 'fpn', 'pspnet', 'pan', 'deeplabv3', 'deeplabv3+']
 optimizers = ['adam']
 loss_funcs = ['dice']
-encoders = ['resnext50_32x4d']
+encoders = ['resnext50_32x4d','resnet101','resnet152']
 activations = ['sigmoid']
 
 for (model, optimizer, loss_func, encoder, activation, lr, wd, lr_scheduler, batch_size, seed) in product(models, optimizers, loss_funcs, encoders, activations, lrs, wds, lr_schedulers, batch_sizes, seeds):
