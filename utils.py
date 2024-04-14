@@ -2,17 +2,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 import torch.nn as nn
+from torch.nn import functional as F
 import random
 import segmentation_models_pytorch as smp
 from datetime import datetime
 from datetime import timedelta
 from datetime import timezone
-
-from scipy import ndimage
-from segmentation_models_pytorch.utils import base,functional
-from segmentation_models_pytorch.base.modules import Activation
-from segmentation_models_pytorch.utils.functional import _take_channels, _threshold
-from torch.nn import functional as F
 
 modelDict = {
     'unet': 'Unet',
@@ -134,13 +129,13 @@ def getLoss(lossName, weight=[1.0,1.0]):
         return smp.losses.FocalLoss(mode='binary')
     elif lossName == 'bce':
         return torch.nn.BCEWithLogitsLoss()
-    elif lossName == 'dice&bce':
+    elif lossName == 'dice+bce':
         return AddLoss(
             smp.utils.losses.DiceLoss(), 
             torch.nn.BCEWithLogitsLoss(),
             weight
         )
-    elif lossName == 'dice&focal':
+    elif lossName == 'dice+focal':
         return AddLoss(
             smp.utils.losses.DiceLoss(), 
             smp.losses.FocalLoss(mode='binary'),
