@@ -18,25 +18,23 @@ def trainAUG():
         albu.GaussNoise(p=0.2),
         albu.Perspective(p=0.5),
 
-        albu.RandomBrightness(limit=0.4),
-        albu.RandomContrast(limit=0.4),
+        albu.RandomBrightnessContrast(brightness_limit=0.4, contrast_limit=0.4),
+
+        # albu.RandomBrightness(limit=0.4),
+        # albu.RandomContrast(limit=0.4),
     ]
     return albu.Compose(train_transform)
 
 
 def validAUG():
-    valid_transform = [
-        albu.Resize(height=512,width=512),
-    ]
-    return albu.Compose(valid_transform)
+    return albu.Compose([albu.Resize(height=512,width=512)])
 
 def to_tensor(x, **kwargs):
-    # (H, W, C) -> (C, H, W)
     return torch.tensor(x.transpose(2, 0, 1).astype('float32'))
 
 def getPreProcess(preprocessing_fn):
-    _transform = [
+    preProcess_trans = [
         albu.Lambda(image=preprocessing_fn),
         albu.Lambda(image=to_tensor, mask=to_tensor),
     ]
-    return albu.Compose(_transform)
+    return albu.Compose(preProcess_trans)

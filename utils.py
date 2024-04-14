@@ -14,6 +14,18 @@ from segmentation_models_pytorch.base.modules import Activation
 from segmentation_models_pytorch.utils.functional import _take_channels, _threshold
 from torch.nn import functional as F
 
+modelDict = {
+    'unet': 'Unet',
+    'unet++': 'UnetPlusPlus',
+    'manet': 'MAnet',
+    'linknet': 'Linknet',
+    'fpn': 'FPN',
+    'pspnet': 'PSPNet',
+    'pan': 'PAN',
+    'deeplabv3': 'DeepLabV3',
+    'deeplabv3+': 'DeepLabV3Plus',
+}
+
 def getLrScheduler(lrSchedulerScheme, optimizer, **kwargs):
     if lrSchedulerScheme == 'step':
         return torch.optim.lr_scheduler.StepLR(
@@ -85,54 +97,17 @@ def setSeed(seed):
     torch.backends.cudnn.benchmark = False
 
 def getModel(args):
-    if args.model == 'unet++':
-        return smp.UnetPlusPlus(
-            encoder_name=args.encoder,
-            encoder_weights=args.encoder_weights,
-            classes=1,
-            in_channels=3,
-            activation=args.activation,
-        )
-    elif args.model == 'unet':
-        return smp.Unet(
-            encoder_name=args.encoder,
-            encoder_weights=args.encoder_weights,
-            classes=1,
-            in_channels=3,
-            activation=args.activation,
-        )
-    elif args.model == 'manet':
-        return smp.MAnet(
-            encoder_name=args.encoder,
-            encoder_weights=args.encoder_weights,
-            classes=1,
-            in_channels=3,
-            activation=args.activation,
-        )
-    elif args.model == 'deeplabv3+':
-        return smp.DeepLabV3Plus(
-            encoder_name=args.encoder,
-            encoder_weights=args.encoder_weights,
-            classes=1,
-            in_channels=3,
-            activation=args.activation,
-        )
-    elif args.model == 'deeplabv3':
-        return smp.DeepLabV3(
-            encoder_name=args.encoder,
-            encoder_weights=args.encoder_weights,
-            classes=1,
-            in_channels=3,
-            activation=args.activation,
-        )
-    elif args.model == 'fpn':
-        return smp.FPN(
-            encoder_name=args.encoder,
-            encoder_weights=args.encoder_weights,
-            classes=1,
-            in_channels=3,
-            activation=args.activation,
-        )
+    kwargs = {
+        'encoder_name': args.encoder,
+        'encoder_weights': args.encoder_weights,
+        'classes': 1,
+        'in_channels': 3,
+        'activation': args.activation,
+    }
+    if args.model in modelDict.keys():
+        return eval(f"smp.{modelDict[args.model]}(**kwargs)")
+    else:
+        raise ValueError('Invalid model name')
 
 def diceCoef(y_pr, y_gt, threshold=0.5, epsilon=1e-9):
     y_pr = (y_pr > threshold).type(y_pr.dtype)

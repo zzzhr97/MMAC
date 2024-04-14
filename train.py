@@ -16,10 +16,10 @@ class Train(object):
     def __init__(self, args):
         self.args = args
 
-        print(f"Set seed {args.seed}")
+        print(f"\nSet seed: {args.seed}")
         setSeed(args.seed)
 
-        print(f"Use device {args.device}")
+        print(f"Use device: {args.device}")
         self.device = torch.device(args.device)
 
         os.makedirs(f"./model/{args.dataset}", exist_ok=True)
@@ -31,7 +31,7 @@ class Train(object):
         self.prepareResultFile()
 
     def prepareData(self):
-        print(f"Load {self.args.dataset} data")
+        print(f"Load data: [{self.args.dataset}]")
         self.preProcess = smp.encoders.get_preprocessing_fn(
             self.args.encoder, self.args.encoder_weights)
         self.trainData = Data(
@@ -72,10 +72,10 @@ class Train(object):
             self.args.encoder_weights
         )
 
-        print("Loss function: ", self.args.loss_func)
+        #print("Loss function: ", self.args.loss_func)
         self.loss = getLoss(self.args.loss_func) 
 
-        print("Optimizer: ", self.args.optimizer)
+        #print("Optimizer: ", self.args.optimizer)
         self.optimizer = getOptimizer(
             self.args.optimizer,
             self.model.parameters(),
@@ -83,7 +83,7 @@ class Train(object):
             wd=self.args.wd
         )
 
-        print("LRScheduler: ", self.args.lr_scheduler)
+        #print("LRScheduler: ", self.args.lr_scheduler)
         self.lrScheduler = getLrScheduler(
             self.args.lr_scheduler,
             self.optimizer,
@@ -184,8 +184,8 @@ class Train(object):
         os.rename(f"./searchlog/{self.args.dataset}/tmp.txt",
                 f"./searchlog/{self.args.dataset}/" + \
                 f"{1-bestScore:.08f}_{self.args.seed}_{self.args.batch_size}_{self.args.lr}_{self.args.lr_scheduler}_{self.args.model}" +\
-                f"_{self.args.optimizer}_{self.args.loss_func}_{self.args.encoder}_{self.args.activation}_{self.timeID}.txt"         
-                         )
+                f"_{self.args.optimizer}_{self.args.loss_func}_{self.args.encoder}_{self.args.activation}_{self.timeID}_{self.args.training_id}.txt"         
+        )
         
 
     def trainOnce(self, epoch):

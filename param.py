@@ -5,7 +5,7 @@ def getArgs():
     parser.add_argument('--training_id', type=str, default='', help='Naming one training. Useful for control/del.sh.')
     parser.add_argument('--base_data_path', nargs='+', type=str, default=['./Data1', './Data2'])
     parser.add_argument('--seed', type=int, default=42)
-    parser.add_argument('--epoch', type=int, default=150)
+    parser.add_argument('--epoch', type=int, default=120)
     parser.add_argument('--save_each', type=int, default=0, 
         help='save model each n epoch, 0 for not save and only save the best.')
     parser.add_argument('--batch_size', type=int, default=4)
@@ -22,8 +22,7 @@ def getArgs():
         '--model', 
         type=str, 
         default='unet++',
-        choices=['unet', 'unet++', 'manet', 'fpn', 'deeplabv3', 'deeplabv3+',
-            'pspnet', 'pan', 'panpp']
+        choices=['unet', 'unet++', 'manet', 'linknet', 'fpn', 'pspnet', 'pan', 'deeplabv3', 'deeplabv3+']
     )
     parser.add_argument(
         '--optimizer', 
