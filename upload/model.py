@@ -42,10 +42,11 @@ class model:
         # self.model_FS.load_state_dict(torch.load(checkpoint_path_FS, map_location=self.device))
         # self.model_FS.to(self.device)
         # self.model_FS.eval()
+        modelDir = 'upload_model'
         subdirs = ['CN', 'FS', 'LC']
         for subdir in subdirs:
-            for pth_name in os.listdir(os.path.join(dir_path, subdir)):
-                pth_path = os.path.join(dir_path, subdir, pth_name)
+            for pth_name in os.listdir(os.path.join(dir_path, modelDir, subdir)):
+                pth_path = os.path.join(dir_path, modelDir, subdir, pth_name)
                 model = torch.load(pth_path, map_location=self.device)
                 model.eval()
                 eval(f"self.model_{subdir}.append(model)")
