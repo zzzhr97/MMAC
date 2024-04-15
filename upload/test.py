@@ -39,7 +39,7 @@ class Test(object):
             print(f"Test data: {str(self.testData[subdir])} --- size {len(self.testData[subdir])}")
 
         self.model = model.model()
-        self.model.load('./upload_model')
+        self.model.load('./')
 
     def test(self, subdir):
         dice = []

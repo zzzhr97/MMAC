@@ -28,10 +28,10 @@ activations = ['sigmoid','relu','tanh']
 '''
 seeds = [42]
 batch_sizes = [4]
-lrs = [1e-3, 1e-4]
+lrs = [1e-3, 1e-4, 1e-5]
 wds = [0]
 lr_schedulers = ['step']
-models = ['unet', 'unet++', 'manet', 'linknet', 'fpn', 'pspnet', 'pan', 'deeplabv3', 'deeplabv3+']
+models = ['pan', 'deeplabv3', 'deeplabv3+']     # 'pspnet', 'pan', 'deeplabv3', 'deeplabv3+'
 optimizers = ['adam']
 loss_funcs = ['dice']
 encoders = ['resnext50_32x4d','resnet101','resnet152']

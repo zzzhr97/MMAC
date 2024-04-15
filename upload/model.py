@@ -42,7 +42,7 @@ class model:
         # self.model_FS.load_state_dict(torch.load(checkpoint_path_FS, map_location=self.device))
         # self.model_FS.to(self.device)
         # self.model_FS.eval()
-        subdirs = ['CN', 'FS', 'LC']
+        subdirs = ['upload_model/CN', 'upload_model/FS', 'upload_model/LC']
         for subdir in subdirs:
             for pth_name in os.listdir(os.path.join(dir_path, subdir)):
                 pth_path = os.path.join(dir_path, subdir, pth_name)
