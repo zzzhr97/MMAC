@@ -62,8 +62,8 @@ class Test(object):
                     precision.append(metrics['precision'])
 
                     pbar.set_postfix_str(
-                        f"Dice: {np.mean(dice):.4f}, " + \
-                        f"Recall: {np.mean(recall):.4f}, " + \
+                        f"Dice     : {np.mean(dice):.4f}, " + \
+                        f"Recall   : {np.mean(recall):.4f}, " + \
                         f"Precision: {np.mean(precision):.4f}"
                     )
 
