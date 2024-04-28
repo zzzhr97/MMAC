@@ -1,11 +1,9 @@
-import matplotlib.pyplot as plt
+
 import numpy as np
 import torch
 import torch.nn as nn
-from torch.nn import functional as F
 import random
 import segmentation_models_pytorch as smp
-import segmentation_models_pytorch.utils
 from datetime import datetime
 from datetime import timedelta
 from datetime import timezone
@@ -71,18 +69,6 @@ def getTime():
     beijing_now = utc_now.astimezone(SHA_TZ)
     timeStr = beijing_now.strftime('%m-%d_%H:%M:%S')
     return timeStr
-
-def visualize(**images):
-    """PLot images in one row."""
-    n = len(images)
-    plt.figure(figsize=(16, 5))
-    for i, (name, image) in enumerate(images.items()):
-        plt.subplot(1, n, i + 1)
-        plt.xticks([])
-        plt.yticks([])
-        plt.title(' '.join(name.split('_')).title())
-        plt.imshow(image)
-    plt.show()
 
 def setSeed(seed):
     random.seed(seed)

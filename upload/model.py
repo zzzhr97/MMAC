@@ -1,7 +1,6 @@
 import os
 import cv2
 import torch
-from torchvision.models.segmentation import deeplabv3_resnet50
 import numpy as np
 import segmentation_models_pytorch as smp
 import albumentations as albu
@@ -25,23 +24,6 @@ class model:
         :param dir_path: path to the submission directory (for internal use only).
         :return:
         """
-        # self.model_LC = deeplabv3_resnet50(num_classes=1)
-        # checkpoint_path_LC = os.path.join(dir_path, self.checkpoint_LC)
-        # self.model_LC.load_state_dict(torch.load(checkpoint_path_LC, map_location=self.device))
-        # self.model_LC.to(self.device)
-        # self.model_LC.eval()
-
-        # self.model_CNV = deeplabv3_resnet50(num_classes=1)
-        # checkpoint_path_CNV = os.path.join(dir_path, self.checkpoint_CNV)
-        # self.model_CNV.load_state_dict(torch.load(checkpoint_path_CNV, map_location=self.device))
-        # self.model_CNV.to(self.device)
-        # self.model_CNV.eval()
-
-        # self.model_FS = deeplabv3_resnet50(num_classes=1)
-        # checkpoint_path_FS = os.path.join(dir_path, self.checkpoint_FS)
-        # self.model_FS.load_state_dict(torch.load(checkpoint_path_FS, map_location=self.device))
-        # self.model_FS.to(self.device)
-        # self.model_FS.eval()
         modelDir = 'upload_model'
         subdirs = ['CN', 'FS', 'LC']
         for subdir in subdirs:

@@ -1,5 +1,5 @@
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 import torch
 import numpy as np
@@ -13,6 +13,13 @@ from utils import setSeed, diceCoef, getModel, getLoss, getOptimizer, getLrSched
 from param import getArgs
 
 class Train(object):
+
+    scoreAnchor = {
+        'CN': 0.7,
+        'FS': 0.7,
+        'LC': 0.6,
+    }
+
     def __init__(self, args):
         self.args = args
 
@@ -92,7 +99,7 @@ class Train(object):
     def prepareResultFile(self):
         self.timeID = getTime()
         
-        if self.args.gridsearch==0:
+        if self.args.gridsearch == 0:
             self.resultFile = open(
                 f"./result/{self.args.dataset}/" + \
                 f"{self.timeID}_{self.args.training_id}.txt",
@@ -101,7 +108,7 @@ class Train(object):
         else:
             self.resultFile = open(
                 f"./searchlog/{self.args.dataset}/" + \
-                f"tmp.txt",
+                f"{self.timeID}_{self.args.training_id}.txt",
                 'w'
             )
         # parameter setting
@@ -168,12 +175,11 @@ class Train(object):
                 )
                 bestScore = validResult['dice']
                 bestEpoch = curEpoch
-                if self.args.gridsearch==0:
-                    torch.save(
-                        self.model,
-                        f"./model/{self.args.dataset}/" + \
-                        f"{self.timeID}_{self.args.training_id}_{self.args.model}_best.pth"
-                    )
+                torch.save(
+                    self.model,
+                    f"./model/{self.args.dataset}/" + \
+                    f"{self.timeID}_{self.args.training_id}_{self.args.model}_best.pth"
+                )
 
         self.write(
             f"\nBest model: {bestEpoch:03d}\nDice: {bestScore:.08f}\n", 
@@ -181,11 +187,22 @@ class Train(object):
         )
         self.close()
 
-        os.rename(f"./searchlog/{self.args.dataset}/tmp.txt",
-                f"./searchlog/{self.args.dataset}/" + \
-                f"{1-bestScore:.08f}_{self.args.seed}_{self.args.batch_size}_{self.args.lr}_{self.args.lr_scheduler}_{self.args.model}" +\
-                f"_{self.args.optimizer}_{self.args.loss_func}_{self.args.encoder}_{self.args.activation}_{self.timeID}_{self.args.training_id}.txt"         
-        )
+        if self.args.gridsearch == 1:
+            rename_str = f"{1-bestScore:.08f}_{self.args.seed}_{self.args.batch_size}_{self.args.lr}_{self.args.lr_scheduler}_{self.args.model}" +\
+                f"_{self.args.optimizer}_{self.args.loss_func}_{self.args.encoder}_{self.args.activation}_{self.timeID}_{self.args.training_id}"   
+            os.rename(
+                f"./searchlog/{self.args.dataset}/{self.timeID}_{self.args.training_id}.txt",
+                f"./searchlog/{self.args.dataset}/" + rename_str + ".txt"         
+            )
+            if bestScore > self.scoreAnchor[self.args.dataset]:
+                os.rename(
+                    f"./model/{self.args.dataset}/{self.timeID}_{self.args.training_id}_{self.args.model}_best.pth",
+                    f"./model/{self.args.dataset}/" + rename_str + ".pth"
+                )
+            else:
+                os.remove(
+                    f"./model/{self.args.dataset}/{self.timeID}_{self.args.training_id}_{self.args.model}_best.pth"
+                )
         
 
     def trainOnce(self, epoch):

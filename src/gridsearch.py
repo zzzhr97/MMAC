@@ -3,17 +3,17 @@ import train
 from itertools import product
 from types import SimpleNamespace
 
-#非网格变量
-training_id = "zhr1"
+training_id = "zhr2"
 base_data_path = ['./Data1', './Data2']
 epoch = 120
 save_each = 0
 device = "cuda"
 encoder_weights = 'imagenet'
-#数据集
 datasets = ["CN","FS","LC"]
 
-#网格变量
+models = ['pan', 'manet', 'unet++']  
+encoders = ['resnext50_32x4d', 'resnet101'] 
+
 '''
 seeds = [42]
 batch_sizes = [100]
@@ -28,18 +28,18 @@ activations = ['sigmoid','relu','tanh']
 '''
 seeds = [42]
 batch_sizes = [4]
-lrs = [1e-3, 1e-4, 1e-5]
+lrs = [1e-4]
 wds = [0]
-lr_schedulers = ['step']
-models = ['pan', 'deeplabv3', 'deeplabv3+']     # 'pspnet', 'pan', 'deeplabv3', 'deeplabv3+'
+lr_schedulers = ['step', 'multiStep']
+models = ['pan', 'manet', 'unet++']     
 optimizers = ['adam']
 loss_funcs = ['dice']
-encoders = ['resnext50_32x4d','resnet101','resnet152']
+encoders = ['resnet101']
 activations = ['sigmoid']
 
-for (model, optimizer, loss_func, encoder, activation, lr, wd, lr_scheduler, batch_size, seed) in product(models, optimizers, loss_funcs, encoders, activations, lrs, wds, lr_schedulers, batch_sizes, seeds):
+for (model, optimizer, loss_func, encoder, activation, lr, wd, lr_scheduler, batch_size, seed) in product(
+    models, optimizers, loss_funcs, encoders, activations, lrs, wds, lr_schedulers, batch_sizes, seeds):
     for dataset in datasets:
-        # 创建args对象
         args = SimpleNamespace(
             training_id=training_id,
             base_data_path=base_data_path,

@@ -1,36 +1,41 @@
-# MMAC
+# MICCAI MMAC 2023 - Task 2
 
-## Training
-- 下载数据集，将`training`和`validation`数据集分别下载到本文件夹，重命名为`Data1`和`Data2`，如`.../MMAC/Data1/2. Segmentation...`
+## Competition Result
+- 我们上传的模型指标最终为 **dice = 0.7345**，在`Future Test Phase - Task 2`中位列**第一名**
+- 并且，我们超过了正式比赛期间`Test Phase - Task 2`上传的模型指标的第一名(**dice = 0.7264**)
+- 下面是比赛结果截图，其中`Avg DSC`是平均 dice 分数，用于最终的排名
+![](./image/final.jpg)
+
+## Run
+
+### Training
+- 下载数据集，比如将`training`和`validation`数据集到本文件夹，重命名为`Data1`和`Data2`，如`.../MMAC/Data1/2. Segmentation...`
 - 超参修改
-  - 在`param.py`中，修改模型名称等基础参数，可以增加或减少训练的模型
-  - 在`param.py`中的`getArgs()`函数中修改总体参数，修改`default`即可
-  - 在`utils.py`中的`getLrScheduler()`函数中修改学习率调度器的参数
-  - 在`utils.py`中修改其他参数
+  - `scripts/train.sh`
+  - `src/param.py`
+  - `src/utils.py`
 - 开始训练
-  - `bash train.sh`
+  - `bash scripts/train.sh`
 - 会生成`model`和`result`文件夹，分别保存模型参数、训练结果
 
-## Delete
-- 删除某次训练生成的`model`，`result`和`searchlog`：
-  - 进入`control`文件夹
-  - 修改`del.sh`文件中的`str`，`delmodel`，`delresult`，`delsearchlog`参数
-  - 运行`bash del.sh`将会删除给定文件夹中，所有包含`str`的文件
-    - 比如`delmodel = 1`那么会删除`model`文件夹中所有包含`str`的文件
-
-## Upload
+### Upload
 - 将模型参数文件`.pth`放到`upload/upload_model/`中，三个不同的数据集分别放到对应的文件夹中
 - 运行`bash test.sh`检查正确性
-- 将下列文件/文件夹打包，如`1_4-12.zip`
+- 将下列文件/文件夹打包，如`upload_1.zip`
   - `upload_model/`
   - `metadata`
   - `model.py`
 - 进入比赛网站 [MMAC](https://codalab.lisn.upsaclay.fr/competitions/12476#participate-submit_results)
 - 进入`future test phase`中，上传`zip`文件
 
-## Grid Search
-- `python gridsearch.py`
-  - 不会输出模型，输出的日志在searchlog目录下，文件名的第一个数为使用这套超参取得最大的dice对应的（1-dice），后面是超参数
+### Grid Search
+- 进行网格搜索
+  - `python src/gridsearch.py`
+
+## Reference Paper
+- `Ensemble Deep Learning Approaches for Myopic Maculopathy Plus Lesions Segmentation` 
+- `A Clinically Guided Approach for Training Deep Neural Networks for Myopic Maculopathy Classification`
+- `Automated Detection of Myopic Maculopathy in MMAC 2023: Achievements in Classification, Segmentation, and Spherical Equivalent Prediction`
 
 ## Record
 - `v0.1`
@@ -44,3 +49,5 @@
   - 修复`smp`包的一个`bug`，只有`import segmentation_model_pytorch.utils`之后才能使用`smp.utils`
 - `v0.5`
   - 修复`upload/model.py`的路径问题
+- `v1.0`
+  - 整理文件夹，完善代码

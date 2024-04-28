@@ -106,15 +106,5 @@ def test1():
         cv2.imwrite("./show/mask/"+sample['fileName'], sample['mask'])
 
 if __name__ == "__main__":
-    # from preprocess import get_training_augmentation
-    # train_dataset = MMACDataset(
-    #     augmentation=get_training_augmentation(),
-    #     lesion='FS',
-    # )
-    # for i,data in enumerate(train_dataset):
-    #     cv2.imwrite("./show/"+str(i)+".png",data[0])
-
-    # import segmentation_models_pytorch as smp
-    # preprocessing_fn = smp.encoders.get_preprocessing_fn('resnext50_32x4d', 'imagenet')
 
     test1()
