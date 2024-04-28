@@ -1,6 +1,7 @@
-# MICCAI MMAC 2023 - Task 2
+# MICCAI MMAC 2023 - Myopic Maculopathy Analysis Challenge - Task 2
 
 ## Competition Result
+- 比赛网站链接：https://codalab.lisn.upsaclay.fr/competitions/12476#results
 - 我们上传的模型指标最终为 **Avg DSC = 0.7345**，在`Future Test Phase - Task 2`中位列**第一名**
 - 并且，我们超过了正式比赛期间`Test Phase - Task 2`上传的模型指标的第一名(**Avg DSC = 0.7264**)
 - 下面是比赛结果截图，其中`Avg DSC`分数用于最终的排名
