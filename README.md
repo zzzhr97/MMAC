@@ -1,9 +1,9 @@
 # MICCAI MMAC 2023 - Task 2
 
 ## Competition Result
-- 我们上传的模型指标最终为 **dice = 0.7345**，在`Future Test Phase - Task 2`中位列**第一名**
-- 并且，我们超过了正式比赛期间`Test Phase - Task 2`上传的模型指标的第一名(**dice = 0.7264**)
-- 下面是比赛结果截图，其中`Avg DSC`是平均 dice 分数，用于最终的排名
+- 我们上传的模型指标最终为 **Avg DSC = 0.7345**，在`Future Test Phase - Task 2`中位列**第一名**
+- 并且，我们超过了正式比赛期间`Test Phase - Task 2`上传的模型指标的第一名(**Avg DSC = 0.7264**)
+- 下面是比赛结果截图，其中`Avg DSC`分数用于最终的排名
 ![](./image/final.jpg)
 
 ## Run
@@ -14,13 +14,17 @@
   - `scripts/train.sh`
   - `src/param.py`
   - `src/utils.py`
-- 开始训练
-  - `bash scripts/train.sh`
-- 会生成`model`和`result`文件夹，分别保存模型参数、训练结果
+- 开始训练，训练过程中会生成`model`和`result`文件夹，分别保存模型参数、训练结果
+```shell
+bash scripts/train.sh
+```
 
 ### Upload
 - 将模型参数文件`.pth`放到`upload/upload_model/`中，三个不同的数据集分别放到对应的文件夹中
-- 运行`bash test.sh`检查正确性
+- 检查正确性
+```shell
+bash test.sh
+```
 - 将下列文件/文件夹打包，如`upload_1.zip`
   - `upload_model/`
   - `metadata`
@@ -29,8 +33,11 @@
 - 进入`future test phase`中，上传`zip`文件
 
 ### Grid Search
+- 修改`src/gridsearch.py`中的参数
 - 进行网格搜索
-  - `python src/gridsearch.py`
+```shell
+python src/gridsearch.py
+```
 
 ## Reference Paper
 - `Ensemble Deep Learning Approaches for Myopic Maculopathy Plus Lesions Segmentation` 
